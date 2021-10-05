@@ -1,0 +1,11 @@
+{
+  "name": "afitechserver",
+  "version": "1.0.0",
+  "description": "Nodejs server for AFI Tech",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Landon McKell",
+  "license": "MIT"
+}
