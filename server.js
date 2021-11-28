@@ -5,7 +5,8 @@ import cors from "cors";
 import path from "path";
 import dotenv from "dotenv";
 import connectDB from "./src/config/db.js";
-import { notFound, errorHandler } from "./src/middleware/auth.middleware.js";
+import { notFound, errorHandler } from "./src/middleware/error.middleware.js";
+import userRoutes from "./src/api/user.api.js";
 
 dotenv.config();
 connectDB();
@@ -15,6 +16,8 @@ app.use(morgan("common"));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
