@@ -2,9 +2,9 @@ import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
 
 //@desc     Get Auth User and Token
-//@route    GET /api/users/login
+//@route    POST /api/users/login
 //@access   Public
-const getUser = async (req, res) => {
+const loginUser = async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (user && (await user.matchPassword(password))) {
@@ -28,7 +28,7 @@ const getUser = async (req, res) => {
 //@desc     Get Admin Profile
 //@route    GET /api/users/profile
 //@access   Private
-const getAdminProfile = async (req, res) => {
+const getUserProfile = async (req, res) => {
     const user = await User.findById(req.user._id);
     if (!user) {
         res.status(404);
@@ -46,7 +46,7 @@ const getAdminProfile = async (req, res) => {
 //@desc     Update User Settings
 //@route    PUT /api/users/profile/settings
 //@access   Private/Admin
-const putUserSettings = async (req, res) => {
+const updateUserSettings = async (req, res) => {
     const user = await User.findById(req.user._id);
     if (!user) {
         res.status(404);
@@ -69,4 +69,4 @@ const putUserSettings = async (req, res) => {
     }
 };
 
-export { getUser, getAdminProfile, putUserSettings };
+export { loginUser, getUserProfile, updateUserSettings };
