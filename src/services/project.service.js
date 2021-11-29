@@ -50,8 +50,8 @@ const createProject = async (req, res, next) => {
             isPublished: req.body.isPublished,
             projectUrl: req.body.projectUrl,
         });
-        const createdProject = await project.save();
-        res.status(201).json(createdProject);
+        await project.save();
+        res.status(201).json(project);
     } catch (error) {
         res.status(401);
         return next(error);
@@ -69,15 +69,18 @@ const updateProject = async (req, res, next) => {
             throw new Error("Project not found.");
         }
         if (project) {
-            project.title = req.body.title;
-            project.slug = req.body.slug;
-            project.shortDescription = req.body.shortDescription;
-            project.longDescription = req.body.longDescription;
-            project.images = req.body.images;
-            project.projectType = req.body.projectType;
-            project.projectStatus = req.body.projectStatus;
-            project.isPublished = req.body.isPublished;
-            project.projectUrl = req.body.projectUrl;
+            project.title = req.body.title || project.title;
+            project.slug = req.body.slug || project.slug;
+            project.shortDescription =
+                req.body.shortDescription || project.shortDescription;
+            project.longDescription =
+                req.body.longDescription || project.longDescription;
+            project.images = req.body.images || project.images;
+            project.projectType = req.body.projectType || project.projectType;
+            project.projectStatus =
+                req.body.projectStatus || project.projectStatus;
+            project.isPublished = req.body.isPublished || project.isPublished;
+            project.projectUrl = req.body.projectUrl || project.projectUrl;
         }
 
         const updatedProject = await project.save();
