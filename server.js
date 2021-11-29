@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import connectDB from "./src/config/db.js";
 import { notFound, errorHandler } from "./src/middleware/error.middleware.js";
 import userRoutes from "./src/api/user.api.js";
+import projectRoutes from "./src/api/project.api.js";
 
 dotenv.config();
 connectDB();
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
+app.use("/api/projects", projectRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
