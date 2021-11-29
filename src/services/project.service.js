@@ -22,7 +22,7 @@ const getAllProjects = async (req, res, next) => {
 //@access   Public
 const getSingleProject = async (req, res, next) => {
     try {
-        const project = await Project.findById({ _id: req.body._id });
+        const project = await Project.findById({ _id: req.params.id });
         if (!project) {
             res.status(404);
             throw new Error("Project not found.");

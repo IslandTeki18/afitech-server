@@ -13,7 +13,7 @@ router.route("/").get(getAllProjects).post(protect, admin, createProject);
 router
     .route("/:id")
     .get(getSingleProject)
-    .put(project, admin, updateProject)
+    .put(protect, admin, updateProject)
     .delete(protect, admin, removeProject);
 
 export default router;
