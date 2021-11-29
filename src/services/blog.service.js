@@ -42,6 +42,7 @@ const createBlog = async (req, res, next) => {
         const blog = new Blog({
             title: req.body.title,
             type: req.body.type,
+            image: req.body.image,
             shortDescription: req.body.shortDescription,
             longDescription: req.body.longDescription,
             author: req.user.id,
@@ -50,7 +51,6 @@ const createBlog = async (req, res, next) => {
         });
         await blog.save();
         res.json(blog);
-        next();
     } catch (error) {
         res.status(401);
         return next(error);
