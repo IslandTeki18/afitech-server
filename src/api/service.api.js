@@ -3,17 +3,20 @@ const router = express.Router();
 import {
     getAllService,
     getSingleService,
-    createAService,
+    createService,
+    createServiceFeature,
     updateAService,
     removeService,
+    removeServiceFeature,
 } from "../services/service.service.js";
 import { protect, admin } from "../middleware/auth.middleware.js";
 
-router.route("/").get(getAllService).post(protect, admin, createAService);
+router.route("/").get(getAllService).post(protect, admin, createService);
 router
     .route("/:id")
     .get(getSingleService)
     .put(protect, admin, updateAService)
     .delete(protect, admin, removeService);
-
+router.post("/:id/feature", protect, admin, createServiceFeature);
+router.delete("/:id/:feature_id", protect, admin, removeServiceFeature);
 export default router;

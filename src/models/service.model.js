@@ -1,14 +1,5 @@
 import mongoose from "mongoose";
 
-const ServiceFeatureSchema = new mongoose.Schema({
-    title: {
-        type: String,
-    },
-    description: {
-        type: String,
-    },
-});
-
 const ServiceSchema = new mongoose.Schema(
     {
         title: {
@@ -30,7 +21,12 @@ const ServiceSchema = new mongoose.Schema(
             type: String,
         },
         images: [{ type: String }],
-        serviceFeatures: [ServiceFeatureSchema],
+        serviceFeatures: [
+            {
+                title: String,
+                description: String,
+            },
+        ],
     },
     {
         timestamps: true,

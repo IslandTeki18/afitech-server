@@ -35,26 +35,61 @@ const getSingleService = async (req, res, next) => {
 };
 
 //@desc     Create Service
-//@route    GET /api/services/
+//@route    POST /api/services
 //@access   Private
-const createAService = async (req, res, next) => {
+const createService = async (req, res, next) => {
     try {
-        const service = new Service({
+        const newService = new Service({
             title: req.body.title,
             type: req.body.type,
             isAvailable: req.body.isAvailable,
             longDescription: req.body.longDescription,
             shortDescription: req.body.shortDescription,
-            images: [req.body.images],
-            serviceFeatures: [
-                {
-                    title: req.body.title,
-                    description: req.body.description,
-                },
-            ],
+            images: [!req.body.images ? "No Images Found." : req.body.images],
+            serviceFeatures: [],
         });
+        await newService.save();
+        res.json(newService);
+    } catch (error) {
+        res.status(401);
+        return next(error);
+    }
+};
+
+//@desc     Create Service Feature
+//@route    POST /api/services/:id/feature
+//@access   Private
+const createServiceFeature = async (req, res, next) => {
+    try {
+        const service = await Service.findById({ _id: req.params.id });
+        if (!service) res.status(404).send({ msg: "Service not found." });
+        const feature = {
+            title: req.body.title,
+            description: req.body.description,
+        };
+        service.serviceFeatures.push(feature);
         await service.save();
-        res.json(service);
+        res.status(200).json({ msg: "Service Feature Created!", service });
+    } catch (error) {
+        res.status(401);
+        return next(error);
+    }
+};
+
+//@desc     Remove Service Feature
+//@route    DELETE /api/services/:id/:feature_id
+//@access   Private
+const removeServiceFeature = async (req, res, next) => {
+    try {
+        const service = await Service.findById({ _id: req.params.id });
+        if (!service) res.status(404).send({ msg: "Service not found." });
+        const newServiceFeatures = service.serviceFeatures.filter(
+            (item) => item._id !== req.params.feature_id
+        );
+        newServiceFeatures.pop();
+        service.serviceFeatures = newServiceFeatures;
+        await service.save();
+        res.status(200).json({ msg: "Service Feature Removed", service });
     } catch (error) {
         res.status(401);
         return next(error);
@@ -115,7 +150,9 @@ const removeService = async (req, res, next) => {
 export {
     getAllService,
     getSingleService,
-    createAService,
+    createService,
+    createServiceFeature,
     updateAService,
+    removeServiceFeature,
     removeService,
 };
