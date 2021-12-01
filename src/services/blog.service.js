@@ -6,13 +6,10 @@ import Blog from "../models/blog.model.js";
 const getAllBlogs = async (req, res, next) => {
     try {
         const blogs = await Blog.find({});
-        if (!blogs) {
-            res.status(404);
-            throw new Error("No blogs found.");
-        }
+        if (!blogs) req.status(404).send({ msg: "Blogs not found." });
         res.json(blogs);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -23,13 +20,10 @@ const getAllBlogs = async (req, res, next) => {
 const getSingleBlog = async (req, res, next) => {
     try {
         const blog = await Blog.findById({ _id: req.params.id });
-        if (!blog) {
-            res.status(404);
-            throw new Error("Blog not found.");
-        }
+        if (!blog) res.status(404).send({ msg: "Blog not found." });
         res.json(blog);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -52,7 +46,7 @@ const createBlog = async (req, res, next) => {
         await blog.save();
         res.json(blog);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -63,10 +57,7 @@ const createBlog = async (req, res, next) => {
 const updateBlog = async (req, res, next) => {
     try {
         const blog = await Blog.findById({ _id: req.params.id });
-        if (!blog) {
-            req.status(404);
-            throw new Error("Blog not found.");
-        }
+        if (!blog) res.status(404).send({ msg: "Blog not found." });
         if (blog) {
             blog.title = req.body.title || blog.title;
             blog.slug = req.body.slug || blog.slug;
@@ -74,14 +65,13 @@ const updateBlog = async (req, res, next) => {
                 req.body.shortDescription || blog.shortDescription;
             blog.longDescription =
                 req.body.longDescription || blog.longDescription;
-            // blog.author = blog.author;
             blog.content = req.body.content || blog.content;
             blog.isPublished = req.body.isPublished || blog.isPublished;
         }
         const updatedBlog = await blog.save();
         res.json(updatedBlog);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -92,10 +82,11 @@ const updateBlog = async (req, res, next) => {
 const removeBlog = async (req, res, next) => {
     try {
         const blog = await Blog.findById({ _id: req.params.id });
+        if (!blog) res.status(404).send({ msg: "Blog not found." });
         await blog.remove();
-        res.json({ message: "Blog Removed." });
+        res.status(200).json({ message: "Blog Removed." });
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };

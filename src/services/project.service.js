@@ -6,13 +6,10 @@ import Project from "../models/project.model.js";
 const getAllProjects = async (req, res, next) => {
     try {
         const projects = await Project.find({});
-        if (!projects) {
-            res.status(404);
-            throw new Error("No projects found.");
-        }
+        if (!projects) res.status(404).send({ msg: "Projects not found." });
         res.json(projects);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -23,13 +20,11 @@ const getAllProjects = async (req, res, next) => {
 const getSingleProject = async (req, res, next) => {
     try {
         const project = await Project.findById({ _id: req.params.id });
-        if (!project) {
-            res.status(404);
-            throw new Error("Project not found.");
-        }
+        if (!project) res.status(404).send({ msg: "Project not found." });
+
         res.json(project);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -53,7 +48,7 @@ const createProject = async (req, res, next) => {
         await project.save();
         res.status(201).json(project);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -64,10 +59,7 @@ const createProject = async (req, res, next) => {
 const updateProject = async (req, res, next) => {
     try {
         const project = await Project.findById({ _id: req.params.id });
-        if (!project) {
-            res.status(404);
-            throw new Error("Project not found.");
-        }
+        if (!project) res.status(404).send({ msg: "Project not found." });
         if (project) {
             project.title = req.body.title || project.title;
             project.slug = req.body.slug || project.slug;
@@ -86,7 +78,7 @@ const updateProject = async (req, res, next) => {
         const updatedProject = await project.save();
         res.json(updatedProject);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -97,16 +89,13 @@ const updateProject = async (req, res, next) => {
 const removeProject = async (req, res, next) => {
     try {
         const project = await Project.findById({ _id: req.params.id });
-        if (!project) {
-            res.status(404);
-            throw new Error("Project not found.");
-        }
+        if (!project) res.status(404).send({ msg: "Project not found." });
         if (project) {
             await project.remove();
             res.json({ message: "Project Removed." });
         }
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };

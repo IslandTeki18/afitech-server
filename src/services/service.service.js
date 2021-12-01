@@ -6,13 +6,10 @@ import Service from "../models/service.model.js";
 const getAllService = async (req, res, next) => {
     try {
         const services = await Service.find({});
-        if (!services) {
-            res.status(404);
-            throw new Error("No services found.");
-        }
+        if (!services) res.status(404).send({ msg: "Services not found." });
         res.json(services);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -23,13 +20,10 @@ const getAllService = async (req, res, next) => {
 const getSingleService = async (req, res, next) => {
     try {
         const service = await Service.findById({ _id: req.params.id });
-        if (!service) {
-            res.status(404);
-            throw new Error("No service found.");
-        }
+        if (!service) res.status(404).send({ msg: "Service not found." });
         res.json(service);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -51,7 +45,7 @@ const createService = async (req, res, next) => {
         await newService.save();
         res.json(newService);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -71,7 +65,7 @@ const createServiceFeature = async (req, res, next) => {
         await service.save();
         res.status(200).json({ msg: "Service Feature Created!", service });
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -91,7 +85,7 @@ const removeServiceFeature = async (req, res, next) => {
         await service.save();
         res.status(200).json({ msg: "Service Feature Removed", service });
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -102,10 +96,7 @@ const removeServiceFeature = async (req, res, next) => {
 const updateAService = async (req, res, next) => {
     try {
         const service = await Service.findById({ _id: req.params.id });
-        if (!service) {
-            res.status(404);
-            throw new Error("No service found.");
-        }
+        if (!service) res.status(404).send({ msg: "Service not found." });
         if (service) {
             service.title = req.body.title || service.title;
             service.type = req.body.type || service.type;
@@ -122,7 +113,7 @@ const updateAService = async (req, res, next) => {
         await service.save();
         res.json(service);
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };
@@ -133,16 +124,13 @@ const updateAService = async (req, res, next) => {
 const removeService = async (req, res, next) => {
     try {
         const service = await Service.findById({ _id: req.params.id });
-        if (!service) {
-            res.status(404);
-            throw new Error("Service not found.");
-        }
+        if (!service) res.status(404).send({ msg: "Service not found." });
         if (service) {
             await service.remove();
             res.json({ message: "Service Removed" });
         }
     } catch (error) {
-        res.status(401);
+        res.status(500);
         return next(error);
     }
 };

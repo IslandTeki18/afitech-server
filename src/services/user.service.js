@@ -7,10 +7,7 @@ import generateToken from "../utils/generateToken.js";
 const loginUser = async (req, res, next) => {
     try {
         const user = await User.findOne({ username: req.body.username });
-        if (!user) {
-            res.status(401);
-            throw new Error("Invalid Username or Password");
-        }
+        if (!user) res.status(404).send({ msg: "User not found." });
         if (user && (await user.matchPassword(req.body.password))) {
             res.json({
                 _id: user._id,
@@ -24,6 +21,7 @@ const loginUser = async (req, res, next) => {
             });
         }
     } catch (error) {
+        res.status(500);
         return next(error);
     }
 };
@@ -34,10 +32,7 @@ const loginUser = async (req, res, next) => {
 const getUserProfile = async (req, res, next) => {
     try {
         const user = await User.findById(req.user._id);
-        if (!user) {
-            res.status(404);
-            throw new Error("User not found.");
-        }
+        if (!user) res.status(404).send({ msg: "User not found." });
         if (user) {
             res.json({
                 _id: user._id,
@@ -46,6 +41,7 @@ const getUserProfile = async (req, res, next) => {
             });
         }
     } catch (error) {
+        res.status(500);
         return next(error);
     }
 };
@@ -56,10 +52,7 @@ const getUserProfile = async (req, res, next) => {
 const updateUserSettings = async (req, res, next) => {
     try {
         const user = await User.findById(req.user._id);
-        if (!user) {
-            res.status(404);
-            throw new Error("User not found.");
-        }
+        if (!user) res.status(404).send({ msg: "User not found." });
         if (user) {
             user.username = req.body.username || user.username;
             if (req.body.password) user.password = req.body.password;
@@ -76,6 +69,7 @@ const updateUserSettings = async (req, res, next) => {
             });
         }
     } catch (error) {
+        res.status(500);
         return next(error);
     }
 };
