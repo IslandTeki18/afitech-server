@@ -91,7 +91,7 @@ const removeServiceFeature = async (req, res, next) => {
 };
 
 //@desc     Update Service Feature
-//@route    PUT /api/services/:id/:feature_id/update
+//@route    PUT /api/services/:id/update
 //@access   Private
 const updateServiceFeature = async (req, res, next) => {
     try {
@@ -110,15 +110,6 @@ const updateServiceFeature = async (req, res, next) => {
             }
         );
         if (!service) res.status(404).send({ msg: "Service not found." });
-        // const newServiceFeature = {
-        //     title: req.body.title,
-        //     description: req.body.des cription,
-        // };
-        // const updatedServiceFeatures = service.serviceFeatures.map((item) =>
-        //     item._id === req.params.feature_id ? newServiceFeature : item
-        // );
-        // service.serviceFeatures = updatedServiceFeatures;
-        // await service.save();
         res.status(200).json({ msg: "Service Feature Updated!", service });
     } catch (error) {
         res.status(500);

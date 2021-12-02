@@ -20,5 +20,5 @@ router
     .delete(protect, admin, removeService);
 router.post("/:id/feature", protect, admin, createServiceFeature);
 router.delete("/:id/:feature_id", protect, admin, removeServiceFeature);
-router.put("/:id/:feature_id/update", protect, admin, updateServiceFeature);
+router.put("/:id/update", protect, admin, updateServiceFeature);
 export default router;
