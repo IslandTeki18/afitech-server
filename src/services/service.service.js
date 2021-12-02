@@ -90,8 +90,44 @@ const removeServiceFeature = async (req, res, next) => {
     }
 };
 
+//@desc     Update Service Feature
+//@route    PUT /api/services/:id/:feature_id/update
+//@access   Private
+const updateServiceFeature = async (req, res, next) => {
+    try {
+        const service = await Service.findByIdAndUpdate(
+            {
+                _id: req.params.id,
+            },
+            {
+                $set: {
+                    title: req.body.title,
+                    description: req.body.description,
+                },
+            },
+            {
+                new: true,
+            }
+        );
+        if (!service) res.status(404).send({ msg: "Service not found." });
+        // const newServiceFeature = {
+        //     title: req.body.title,
+        //     description: req.body.des cription,
+        // };
+        // const updatedServiceFeatures = service.serviceFeatures.map((item) =>
+        //     item._id === req.params.feature_id ? newServiceFeature : item
+        // );
+        // service.serviceFeatures = updatedServiceFeatures;
+        // await service.save();
+        res.status(200).json({ msg: "Service Feature Updated!", service });
+    } catch (error) {
+        res.status(500);
+        return next(error);
+    }
+};
+
 //@desc     Update a Service
-//@route    GET /api/services/:id
+//@route    PUT /api/services/:id
 //@access   Private
 const updateAService = async (req, res, next) => {
     try {
@@ -106,9 +142,6 @@ const updateAService = async (req, res, next) => {
                 req.body.longDescription || service.longDescription;
             service.isAvailable = req.body.isAvailable || service.isAvailable;
             service.images = [req.body.images] || [service.images];
-            service.serviceFeatures = [req.body.serviceFeatures] || [
-                service.serviceFeatures,
-            ];
         }
         await service.save();
         res.json(service);
@@ -119,7 +152,7 @@ const updateAService = async (req, res, next) => {
 };
 
 //@desc     Remove a Service
-//@route    GET /api/services/:id
+//@route    DELETE /api/services/:id
 //@access   Private
 const removeService = async (req, res, next) => {
     try {
@@ -141,6 +174,7 @@ export {
     createService,
     createServiceFeature,
     updateAService,
+    updateServiceFeature,
     removeServiceFeature,
     removeService,
 };

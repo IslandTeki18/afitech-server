@@ -6,6 +6,7 @@ import {
     createService,
     createServiceFeature,
     updateAService,
+    updateServiceFeature,
     removeService,
     removeServiceFeature,
 } from "../services/service.service.js";
@@ -19,4 +20,5 @@ router
     .delete(protect, admin, removeService);
 router.post("/:id/feature", protect, admin, createServiceFeature);
 router.delete("/:id/:feature_id", protect, admin, removeServiceFeature);
+router.put("/:id/:feature_id/update", protect, admin, updateServiceFeature);
 export default router;
