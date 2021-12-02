@@ -10,6 +10,7 @@ import userRoutes from "./src/api/user.api.js";
 import projectRoutes from "./src/api/project.api.js";
 import blogRoutes from "./src/api/blog.api.js";
 import serviceRoutes from "./src/api/service.api.js";
+import testimonialRoutes from "./src/api/testimonial.api.js";
 
 dotenv.config();
 connectDB();
@@ -24,6 +25,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/testimonials", testimonialRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
