@@ -27,6 +27,10 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 
+app.get("/", (req, res) => {
+    res.send("API is running");
+});
+
 app.use(notFound);
 app.use(errorHandler);
 
