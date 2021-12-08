@@ -9,7 +9,8 @@
         "dev": "nodemon server",
         "test": "echo \"Error: no test specified\" && exit 1",
         "data:import": "node ./src/utils/seeder.js",
-        "data:destroy": "node ./src/utils/seeder.js -d"
+        "data:destroy": "node ./src/utils/seeder.js -d",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build"
     },
     "author": "Landon McKell",
     "license": "MIT",
@@ -26,8 +27,7 @@
         "mongoose": "^6.0.13",
         "morgan": "^1.10.0",
         "nodemon": "^2.0.13",
-        "path": "^0.12.7",
-        "save": "^2.4.0"
+        "path": "^0.12.7"
     },
     "engines": {
         "node": "14.x"
