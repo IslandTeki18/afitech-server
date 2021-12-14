@@ -11,6 +11,7 @@ import projectRoutes from "./src/api/project.api.js";
 import blogRoutes from "./src/api/blog.api.js";
 import serviceRoutes from "./src/api/service.api.js";
 import testimonialRoutes from "./src/api/testimonial.api.js";
+import employeeRoutes from "./src/api/employee.api.js";
 
 dotenv.config();
 connectDB();
@@ -26,6 +27,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/testimonials", testimonialRoutes);
+app.use("/api/employees", employeeRoutes);
 
 app.get("/", (req, res) => {
     res.send("API is running");
