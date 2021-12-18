@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import {
-    getAllEmployee,
+    getAllEmployees,
     getSingleEmployee,
     createEmployee,
     updateAnEmployee,
@@ -9,7 +9,7 @@ import {
 } from "../services/employee.service.js";
 import { admin, protect } from "../middleware/auth.middleware.js";
 
-router.route("/").get(getAllEmployee).post(protect, admin, createEmployee);
+router.route("/").get(getAllEmployees).post(protect, admin, createEmployee);
 router
     .route("/:id")
     .get(getSingleEmployee)
