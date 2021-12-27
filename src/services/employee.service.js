@@ -22,7 +22,7 @@ const getSingleEmployee = async (req, res, next) => {
     try {
         const employee = await Employee.findById({ _id: req.params.id });
         if (!employee) return res.status(404).send("Employee not found.");
-        res.status(200).json(emloyee);
+        res.status(200).json(employee);
     } catch (error) {
         res.status(500);
         return next(error);
