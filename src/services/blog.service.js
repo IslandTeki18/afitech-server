@@ -80,7 +80,7 @@ const updateBlog = async (req, res, next) => {
 //@access   Private
 const publishBlog = async (req, res, next) => {
   try {
-    const blog = await Blog.findyById({ _id: req.params.id });
+    const blog = await Blog.findById({ _id: req.params.id });
     if (!blog) res.status(404).send({ msg: "Blog not found." });
 
     if (blog) {
@@ -110,4 +110,11 @@ const removeBlog = async (req, res, next) => {
   }
 };
 
-export { getAllBlogs, getSingleBlog, createBlog, updateBlog, publishBlog, removeBlog };
+export {
+  getAllBlogs,
+  getSingleBlog,
+  createBlog,
+  updateBlog,
+  publishBlog,
+  removeBlog,
+};

@@ -16,6 +16,6 @@ router
   .get(getSingleBlog)
   .put(protect, admin, updateBlog)
   .delete(protect, admin, removeBlog);
-router.put("/:id/publish", protect, admin, publishBlog);
+router.route("/:id/publish").put(protect, admin, publishBlog);
 
 export default router;
