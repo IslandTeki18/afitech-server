@@ -75,16 +75,16 @@ const updateBlog = async (req, res, next) => {
   }
 };
 
-//@desc     Toggle a blog's publishing
+//@desc     Publish a Blog
 //@route    PUT /api/blogs/:id/publish
 //@access   Private
-const toggleBlog = async (req, res, next) => {
+const publishBlog = async (req, res, next) => {
   try {
     const blog = await Blog.findById({ _id: req.params.id });
     if (!blog) res.status(404).send({ msg: "Blog not found." });
 
     if (blog) {
-      blog.isPublished = req.body.isPublished;
+      blog.isPublished = true;
       blog.publishedAt = Date.now();
     }
     const updatedBlog = await blog.save();
@@ -115,6 +115,6 @@ export {
   getSingleBlog,
   createBlog,
   updateBlog,
-  toggleBlog,
+  publishBlog,
   removeBlog,
 };
