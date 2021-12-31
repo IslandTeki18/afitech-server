@@ -5,7 +5,7 @@ import {
   getSingleBlog,
   createBlog,
   updateBlog,
-  publishBlog,
+  toggleBlog,
   removeBlog,
 } from "../services/blog.service.js";
 import { protect, admin } from "../middleware/auth.middleware.js";
@@ -16,6 +16,6 @@ router
   .get(getSingleBlog)
   .put(protect, admin, updateBlog)
   .delete(protect, admin, removeBlog);
-router.route("/:id/publish").put(protect, admin, publishBlog);
+router.route("/:id/publish").put(protect, admin, toggleBlog);
 
 export default router;
