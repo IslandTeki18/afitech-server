@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const TestimonialSchema = new mongoose.Schema({
+const TestimonialSchema = new mongoose.Schema(
+  {
     name: String,
     image: String,
     testimonial: String,
@@ -9,12 +10,14 @@ const TestimonialSchema = new mongoose.Schema({
     companyWebsite: String,
     companyLocation: String,
     isActive: {
-        type: Boolean,
-        default: false,
-    }
-}, {
-    timestamps: true
-});
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Testimonial = mongoose.model("Testmonial", TestimonialSchema);
 export default Testimonial;
