@@ -22,6 +22,18 @@ const importData = async () => {
     }
 };
 
+const importUsers = async() => {
+    try {
+        await User.deleteMany();
+        await User.insertMany(users)
+        console.log("User base purged and replanted with seeder user.")
+        process.exit(1)
+    } catch (error) {
+        console.log(error)
+        process.exit(1)
+    }
+}
+
 const destroyData = async () => {
     try {
         await User.deleteMany();
@@ -36,6 +48,8 @@ const destroyData = async () => {
 
 if (process.argv[2] === "-d") {
     destroyData();
+} else if (process.argv[2] === "-users") {
+    importUsers()
 } else {
     importData();
 }

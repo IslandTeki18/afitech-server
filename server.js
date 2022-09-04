@@ -29,7 +29,7 @@ app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/employees", employeeRoutes);
 
 app.get("/", (req, res) => {
-  res.send("API is running");
+  res.send("AFI TECH SERVER is running");
 });
 
 app.use(notFound);

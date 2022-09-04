@@ -8,6 +8,7 @@
         "start": "nodemon server",
         "test": "echo \"Error: no test specified\" && exit 1",
         "data:import": "node ./src/utils/seeder.js",
+        "data:import-users": "node ./src/utils/seeder -users",
         "data:destroy": "node ./src/utils/seeder.js -d"
     },
     "author": "Landon McKell",
